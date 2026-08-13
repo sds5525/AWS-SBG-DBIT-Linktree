@@ -36,14 +36,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Update Email link & text display
   if (CONFIG.email) {
+    const email = CONFIG.email;
+    const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
     const emailEls = document.querySelectorAll('[data-link="email"]');
+
     emailEls.forEach(el => {
       if (el.tagName.toLowerCase() === "a") {
-        el.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONFIG.email)}`;
+        // Keep a plain web fallback as the href itself (works if JS fails to load,
+        // and as the final fallback destination on desktop browsers).
+        el.href = gmailWebUrl;
+
+        el.addEventListener("click", (event) => {
+          const ua = navigator.userAgent || "";
+          const isAndroid = /Android/i.test(ua);
+          const isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+          // Desktop: just let the normal href (Gmail web compose) fire.
+          if (!isAndroid && !isIOS) return;
+
+          event.preventDefault();
+
+          if (isAndroid) {
+            // Android intent URL: opens the Gmail app directly if installed,
+            // otherwise falls back to the Gmail web compose URL automatically.
+            const intentUrl =
+              `intent://co?to=${encodeURIComponent(email)}` +
+              `#Intent;scheme=googlegmail;package=com.google.android.gm;` +
+              `S.browser_fallback_url=${encodeURIComponent(gmailWebUrl)};end`;
+            window.location.href = intentUrl;
+            return;
+          }
+
+          // iOS: try the Gmail app's URL scheme, then fall back to Gmail web
+          // if the app isn't installed (iOS gives no error, it just no-ops).
+          let leftPage = false;
+          const markLeft = () => { leftPage = true; };
+          document.addEventListener("visibilitychange", markLeft, { once: true });
+          window.addEventListener("pagehide", markLeft, { once: true });
+
+          window.location.href = `googlegmail://co?to=${encodeURIComponent(email)}`;
+
+          setTimeout(() => {
+            if (!leftPage) {
+              window.location.href = gmailWebUrl;
+            }
+          }, 600);
+        });
       }
       const emailTextSpan = el.querySelector(".email-text");
       if (emailTextSpan) {
-        emailTextSpan.textContent = CONFIG.email;
+        emailTextSpan.textContent = email;
       }
     });
   }
