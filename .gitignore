@@ -1,6 +1,3 @@
-# Secret configuration file containing actual social links
-config.js
-
 # Environment files
 .env
 .env.local
