@@ -210,7 +210,33 @@ body {
 
 .mail-row svg { width: 16px; height: 16px; fill: currentColor; flex: none; }
 
+/* ---------- Coming Soon ---------- */
+.coming-soon {
+  text-align: center;
+  margin-bottom: 28px;
+  width: 100%;
+}
+
+.coming-soon-title {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+}
+
+.coming-soon-subtext {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
 @media (max-width: 360px) {
   .name { font-size: 20px; }
   .link-card { padding: 14px; }
+  .coming-soon-title { font-size: 22px; }
+  .coming-soon-subtext { font-size: 13px; }
 }
