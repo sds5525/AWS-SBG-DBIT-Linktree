@@ -151,6 +151,58 @@ body {
 
 .chevron { flex: none; width: 16px; height: 16px; fill: #C6B8E8; }
 
+
+/* ---------- Highlight links ---------- */
+.highlight-links {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.link-card--featured {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  border: none;
+  box-shadow: 0 8px 22px var(--shadow);
+  color: #fff;
+}
+
+.link-card--featured .link-icon {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.link-card--featured .link-icon svg {
+  fill: #fff;
+  color: #fff;
+}
+
+.link-card--featured .link-sub {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.link-card--featured .chevron {
+  fill: rgba(255, 255, 255, 0.85);
+}
+
+.link-card--featured:hover,
+.link-card--featured:focus-visible {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 14px 30px var(--shadow);
+  border-color: transparent;
+}
+
+.follow-heading {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0 0 16px;
+}
+
 /* ---------- Footer ---------- */
 .footer-icons {
   display: flex;
